@@ -20,6 +20,12 @@ async def database_disconnect():
 async def Bienvenida():
     return "Le damos la bienvenida a la Base de datos de F1, para realizar consultar  por favor visite /Docs"
 
+@app.get("/Si desea Hacer una consulta en SQL por favor escribala aca.")
+async def fetch_data(Escriba_su_consulta: str):
+    Consulta = "{}".format(str(Escriba_su_consulta))
+    results = await database.fetch_all(query=Consulta)
+    return  results
+
 @app.get("/Año con mas carreras")
 async def fetch_data(Cantidad_de_Resultados: int):
     Consulta = "SELECT year as AÑO,count(circuitId)git exit as Carreras_Totales FROM races group by year order by Carreras_Totales  desc limit {}".format(str(Cantidad_de_Resultados))
